@@ -69,7 +69,7 @@ class Reader:
 #    )
     #
     @cached(
-        cache=LRUCache(maxsize=32),
+        cache=LRUCache(maxsize=1024),
         key=lambda self, offset, length: hashkey(self.filepath, offset, length)
     )
 #    @lru_cache(maxsize=64, condition=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}")
