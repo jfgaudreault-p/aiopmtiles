@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from typing import Dict, Optional, Protocol, Tuple
 
 #from aiocache import Cache, cached
-from conditional_cache import lru_cache
+from cachetools import cached, LRUCache
 from pmtiles.tile import (
     Compression,
     TileType,
@@ -62,7 +62,11 @@ class Reader:
 #        cache=Cache.MEMORY,
 #        key_builder=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}",
 #    )
-    @lru_cache(maxsize=64, condition=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}")
+    @cached(
+        cache=LRUCache(maxsize=32),
+        key=lambda self, offset, length: hashkey(self.filepath, offset, length)
+    )
+#    @lru_cache(maxsize=64, condition=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}")
     async def _get(self, offset: int, length: int) -> bytes:
         """Get Bytes."""
         return await self.fs.get(offset, length)

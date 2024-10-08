@@ -23,6 +23,7 @@ dependencies = [
     "httpx",
     "aiofiles",
     "conditional-cache",
+    "cachetools",
 ]
 
 [project.optional-dependencies]
