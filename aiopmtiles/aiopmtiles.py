@@ -30,7 +30,7 @@ class _GetBytes(Protocol):
         ...
 
 
-def mykey(filepath, offset, length):
+def mykey(*args, filepath, offset, length, **kwarg):
     if offset < 1000:
         key = hashkey(filepath, offset, length)
         return key
