@@ -142,7 +142,7 @@ class S3FileSystem(FileSystem):
             #self._session.resource("s3")
 #        )
         parsed = urlparse(self.filepath)
-        self._obj = await _resource.Object(parsed.netloc, parsed.path.strip("/"))
+        self._obj = await _resource(parsed.netloc, parsed.path.strip("/"))
         return self
 
 
