@@ -98,6 +98,7 @@ class HttpFileSystem(FileSystem):
     async def get(self, offset: int, length: int) -> bytes:
         """Perform a range request"""
         range_header = {"Range": f"bytes={offset}-{offset + length}"}
+        print('offset:',offset,'length:', length)
         resp = await client.get(self.filepath, headers=range_header)
         resp.raise_for_status()
         return resp.content
