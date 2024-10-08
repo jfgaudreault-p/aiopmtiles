@@ -108,9 +108,6 @@ class HttpFileSystem(FileSystem):
         return self
 
 
-_session = aioboto3.Session()
-_resource = _session.resource("s3")
-
 @dataclass
 class S3FileSystem(FileSystem):
     """S3 filesystem"""
@@ -137,12 +134,12 @@ class S3FileSystem(FileSystem):
 
     async def __aenter__(self):
         """Async context management"""
- #       self._session = aioboto3.Session()
-#        self._resource = await self.ctx.enter_async_context(
-            #self._session.resource("s3")
-#        )
         parsed = urlparse(self.filepath)
-        self._obj = await _resource(parsed.netloc, parsed.path.strip("/"))
+        self._session = aioboto3.Session()
+        self._resource = await self.ctx.enter_async_context(
+            self._session.resource("s3")
+        )
+        self._obj = await self._resource.Object(parsed.netloc, parsed.path.strip("/"))
         return self
 
 
