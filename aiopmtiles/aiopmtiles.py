@@ -6,7 +6,7 @@ from contextlib import AsyncExitStack
 from dataclasses import dataclass, field
 from typing import Dict, Optional, Protocol, Tuple
 
-from aiocache import Cache, cached
+#from aiocache import Cache, cached
 from pmtiles.tile import (
     Compression,
     TileType,
@@ -57,10 +57,10 @@ class Reader:
         """Support using with Context Managers."""
         await self._ctx.__aexit__(exc_type, exc_value, traceback)
 
-    @cached(
-        cache=Cache.MEMORY,
-        key_builder=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}",
-    )
+#    @cached(
+#        cache=Cache.MEMORY,
+#        key_builder=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}",
+#    )
     async def _get(self, offset: int, length: int) -> bytes:
         """Get Bytes."""
         return await self.fs.get(offset, length)
