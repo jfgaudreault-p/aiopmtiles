@@ -24,6 +24,7 @@ dependencies = [
     "aiofiles",
     "conditional-cache",
     "cachetools",
+    "asyncache"
 ]
 
 [project.optional-dependencies]
