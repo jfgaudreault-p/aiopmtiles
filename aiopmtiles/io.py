@@ -87,23 +87,23 @@ class LocalFileSystem(FileSystem):
         )
         return self
 
+client: httpx.AsyncClient = field(init=False)
 
 @dataclass
 class HttpFileSystem(FileSystem):
     """HTTP filesystem"""
 
-    client: httpx.AsyncClient = field(init=False)
 
     async def get(self, offset: int, length: int) -> bytes:
         """Perform a range request"""
         range_header = {"Range": f"bytes={offset}-{offset + length}"}
-        resp = await self.client.get(self.filepath, headers=range_header)
+        resp = await client.get(self.filepath, headers=range_header)
         resp.raise_for_status()
         return resp.content
 
     async def __aenter__(self):
         """Async context management"""
-        self.client = await self.ctx.enter_async_context(httpx.AsyncClient())
+        client = await self.ctx.enter_async_context(httpx.AsyncClient())
         return self
 
 
