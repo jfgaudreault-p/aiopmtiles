@@ -87,7 +87,8 @@ class LocalFileSystem(FileSystem):
         )
         return self
 
-client: httpx.AsyncClient = field(init=False)
+#client: httpx.AsyncClient = field(init=False)
+client = httpx.AsyncClient()
 
 @dataclass
 class HttpFileSystem(FileSystem):
@@ -103,7 +104,7 @@ class HttpFileSystem(FileSystem):
 
     async def __aenter__(self):
         """Async context management"""
-        client = await self.ctx.enter_async_context(httpx.AsyncClient())
+        #client = await self.ctx.enter_async_context(httpx.AsyncClient())
         return self
 
 
