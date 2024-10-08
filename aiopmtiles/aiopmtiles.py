@@ -34,7 +34,7 @@ async def mykey(filepath, offset, length):
     if offset < 1000:
         key = hashkey(filepath, offset, length)
         return key
-    else
+    else:
         return None
 
 
