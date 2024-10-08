@@ -8,6 +8,8 @@ from typing import Dict, Optional, Protocol, Tuple
 
 #from aiocache import Cache, cached
 from cachetools import cached, LRUCache
+from cachetools.keys import hashkey
+
 from pmtiles.tile import (
     Compression,
     TileType,
