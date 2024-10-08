@@ -22,7 +22,7 @@ dependencies = [
     "pmtiles",
     "httpx",
     "aiofiles",
-    "aiocache",
+    "conditional-cache",
 ]
 
 [project.optional-dependencies]
