@@ -30,6 +30,14 @@ class _GetBytes(Protocol):
         ...
 
 
+async def mykey(filepath, offset, length):
+    if offset < 1000:
+        key = hashkey(filepath, offset, length)
+        return key
+    else
+        return None
+
+
 @dataclass
 class Reader:
     """PMTiles Reader."""
@@ -70,7 +78,7 @@ class Reader:
     #
     @cached(
         cache=LRUCache(maxsize=1024),
-        key=lambda self, offset, length: hashkey(self.filepath, offset, length)
+        key=lambda self, offset, length: hashkey(mykey)
     )
 #    @lru_cache(maxsize=64, condition=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}")
     async def _get(self, offset: int, length: int) -> bytes:
