@@ -11,6 +11,7 @@ from typing import Dict, Optional, Protocol, Tuple
 from cachetools.keys import hashkey
 from asyncache import cached
 from cachetools import LRUCache
+from conditional_cache import lru_cache
 
 from pmtiles.tile import (
     Compression,
@@ -66,8 +67,9 @@ class Reader:
 #        cache=Cache.MEMORY,
 #        key_builder=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}",
 #    )
+    #LRUCache(maxsize=32),
     @cached(
-        cache=LRUCache(maxsize=32),
+        cache=lru_cache(maxsize=64, condition=lambda offset: offset < 1000)
         key=lambda self, offset, length: hashkey(self.filepath, offset, length)
     )
 #    @lru_cache(maxsize=64, condition=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}")
