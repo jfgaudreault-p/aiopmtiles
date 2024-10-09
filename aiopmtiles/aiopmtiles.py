@@ -112,7 +112,7 @@ class Reader:
 
         dir_offset = self._header["root_offset"]
         dir_length = self._header["root_length"]
-        for _ in range(0, 4):  # max depth
+        for _ in range(0, 6):  # max depth
             directory_values = await self._get(dir_offset, dir_length - 1)
             directory = deserialize_directory(directory_values)
 
