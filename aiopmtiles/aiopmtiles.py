@@ -77,7 +77,7 @@ class Reader:
             print('caching offset:',offset,'length:', length)
             return key
         else:
-            raise Exception("Don' cache")
+            raise Exception("Don't cache")
 
     @cached(
         cache=LRUCache(maxsize=1024),
@@ -89,11 +89,11 @@ class Reader:
         return await self.fs.get(offset, length)
 
     async def _get(self, offset: int, length: int) -> bytes:
-#        try:
-        return await self.__get(offset, length)
-#        except:
- #           print('not caching offset:',offset,'length:', length)
- #           return await self.fs.get(offset, length)
+        try:
+            return await self.__get(offset, length)
+        except:
+            print('not caching offset:',offset,'length:', length)
+            return await self.fs.get(offset, length)
 
     async def metadata(self) -> Dict:
         """Return PMTiles Metadata."""
