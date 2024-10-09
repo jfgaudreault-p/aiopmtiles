@@ -80,7 +80,7 @@ class Reader:
             raise Exception("Don't cache")
 
     @cached(
-        cache=LRUCache(maxsize=1024),
+        cache=LRUCache(maxsize=16384),
         key=mykey
     )
 #    @lru_cache(maxsize=64, condition=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}")
