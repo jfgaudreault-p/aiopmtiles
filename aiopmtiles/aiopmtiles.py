@@ -33,6 +33,7 @@ class _GetBytes(Protocol):
 def mykey(self, offset, length):
     if offset <= 127:
         key = hashkey(self.filepath, offset, length)
+        print('caching offset:',offset,'length:', length)
         return key
     else:
         raise Exception("Don' cache")
@@ -90,6 +91,7 @@ class Reader:
         try:
             return await self.__get(self, offset, length)
         except:
+            print('not caching offset:',offset,'length:', length)
             return await self.fs.get(offset, length)
 
     async def metadata(self) -> Dict:
