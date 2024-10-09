@@ -88,11 +88,11 @@ class Reader:
         return await self.fs.get(offset, length)
 
     async def _get(self, offset: int, length: int) -> bytes:
-        try:
-            return await self.__get(self, offset, length)
-        except:
-            print('not caching offset:',offset,'length:', length)
-            return await self.fs.get(offset, length)
+#        try:
+        return await self.__get(self, offset, length)
+#        except:
+ #           print('not caching offset:',offset,'length:', length)
+ #           return await self.fs.get(offset, length)
 
     async def metadata(self) -> Dict:
         """Return PMTiles Metadata."""
