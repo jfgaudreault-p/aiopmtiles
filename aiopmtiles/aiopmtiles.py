@@ -113,7 +113,7 @@ class Reader:
         dir_offset = self._header["root_offset"]
         dir_length = self._header["root_length"]
         for _ in range(0, 4):  # max depth
-            directory_values = await self._get(dir_offset, dir_length)# - 1)
+            directory_values = await self._get(dir_offset, dir_length - 1)
             directory = deserialize_directory(directory_values)
 
             if result := find_tile(directory, tile_id):
@@ -124,7 +124,7 @@ class Reader:
                 else:
                     data = await self._get(
                         self._header["tile_data_offset"] + result.offset,
-                        result.length, # - 1,
+                        result.length - 1,
                     )
                     return data
 
