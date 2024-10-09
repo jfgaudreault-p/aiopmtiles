@@ -30,12 +30,12 @@ class _GetBytes(Protocol):
         ...
 
 
-def mykey(*args, self, offset, length, **kwarg):
-    if offset < 1000:
+def mykey(self, offset, length):
+    if offset <= 127:
         key = hashkey(self.filepath, offset, length)
         return key
     else:
-        return None
+        raise Exception("Don' cache")
 
 
 @dataclass
@@ -76,14 +76,21 @@ class Reader:
 #        key_builder=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}",
 #    )
     #
+#        key=lambda self, offset, length: hashkey(self.filepath, offset, length)
     @cached(
         cache=LRUCache(maxsize=1024),
-        key=lambda self, offset, length: hashkey(mykey)
+        key=mykey
     )
 #    @lru_cache(maxsize=64, condition=lambda f, self, offset, length: f"{self.filepath}-{offset}-{length}")
-    async def _get(self, offset: int, length: int) -> bytes:
+    async def __get(self, offset: int, length: int) -> bytes:
         """Get Bytes."""
         return await self.fs.get(offset, length)
+
+    async def _get(self, offset: int, length: int) -> bytes:
+        try:
+            return await self.__get(self, offset, length)
+        except:
+            return await self.fs.get(offset, length)
 
     async def metadata(self) -> Dict:
         """Return PMTiles Metadata."""
