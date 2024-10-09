@@ -90,7 +90,7 @@ class Reader:
 
     async def _get(self, offset: int, length: int) -> bytes:
 #        try:
-        return await self.__get(self, offset, length)
+        return await self.__get(offset, length)
 #        except:
  #           print('not caching offset:',offset,'length:', length)
  #           return await self.fs.get(offset, length)
