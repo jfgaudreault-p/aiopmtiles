@@ -30,13 +30,6 @@ class _GetBytes(Protocol):
         ...
 
 
-def mykey(self, offset, length):
-    if offset <= 127:
-        key = hashkey(self.filepath, offset, length)
-        print('caching offset:',offset,'length:', length)
-        return key
-    else:
-        raise Exception("Don' cache")
 
 
 @dataclass
@@ -78,6 +71,14 @@ class Reader:
 #    )
     #
 #        key=lambda self, offset, length: hashkey(self.filepath, offset, length)
+    def mykey(self, offset, length):
+        if offset <= 127:
+            key = hashkey(self.filepath, offset, length)
+            print('caching offset:',offset,'length:', length)
+            return key
+        else:
+            raise Exception("Don' cache")
+
     @cached(
         cache=LRUCache(maxsize=1024),
         key=mykey
